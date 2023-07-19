@@ -27,23 +27,48 @@ function App() {
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    axios.post("http://localhost:8080/myapp", statement)
-      .then((res) => console.log(res))
+    e.preventDefault();
+    setStatementstohandle(statement);
+    axios.post("http://localhost:8080/myapp", {"feelings": statement})
+      .then((res) => {
+        getRequest();
+      } )
       .catch(err => console.log(err))
-    setStatementstohandle(statement)
+    
   }
+
+  function getRequest(){
+    axios.get("http://localhost:8080/myapp")
+      .then(res => {
+        setPastStatements(res.data)
+      })
+      .catch(err=> console.log(err))
+  }
+
+function handleEdit(){
+
+}
+
+function handleDelete(){
+
+
+}
+
+
+
+
+
 
 
   useEffect(() => {
-    axios.get("http://localhost:8080/myapp")
-      .then(res => {
-        console.log("made a get request");
-        setPastStatements(res.data)
-        console.log(pastStatements)
-      })
-      .catch(err => console.log(err))
+   getRequest()
   }, [])
+
+
+
+
+
+
 
   return (
     <>
@@ -57,7 +82,9 @@ function App() {
             {pastStatements.map((statement) => {
               return (<div key={statement.id}>
                 Anon: {statement.feelings}&nbsp;
-                Posted {statement.created_at}
+                Posted {statement.created_at}&nbsp;
+                <button onClick={handleEdit}>Edit</button>&nbsp;
+                <button onClick={handleDelete}>Delete</button>
               </div>);
             })}
           </div>
