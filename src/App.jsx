@@ -45,12 +45,13 @@ function App() {
       .catch(err=> console.log(err))
   }
 
-function handleEdit(){
-
-}
-
-function handleDelete(){
-
+function handleDelete(e){
+  console.log(e.target.value)
+axios.delete("http://localhost:8080/myapp/", {data: {"id": e.target.value}})
+.then((res)=>{
+getRequest();
+})
+.catch(err=> console.log(err))
 
 }
 
@@ -83,8 +84,7 @@ function handleDelete(){
               return (<div key={statement.id}>
                 Anon: {statement.feelings}&nbsp;
                 Posted {statement.created_at}&nbsp;
-                <button onClick={handleEdit}>Edit</button>&nbsp;
-                <button onClick={handleDelete}>Delete</button>
+                <button value={statement.id} onClick={handleDelete}>Delete</button>
               </div>);
             })}
           </div>
