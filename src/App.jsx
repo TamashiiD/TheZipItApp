@@ -29,7 +29,7 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setStatementstohandle(statement);
-    axios.post("http://localhost:8080/myapp", {"feelings": statement})
+    axios.post("https://zip-it-e12d2bddca2d.herokuapp.com/", {"feelings": statement})
       .then((res) => {
         getRequest();
       } )
@@ -38,7 +38,7 @@ function App() {
   }
 
   function getRequest(){
-    axios.get("http://localhost:8080/myapp")
+    axios.get("https://zip-it-e12d2bddca2d.herokuapp.com/")
       .then(res => {
         setPastStatements(res.data)
       })
@@ -47,7 +47,7 @@ function App() {
 
 function handleDelete(e){
   console.log(e.target.value)
-axios.delete("http://localhost:8080/myapp/", {data: {"id": e.target.value}})
+axios.delete("https://zip-it-e12d2bddca2d.herokuapp.com/", {data: {"id": e.target.value}})
 .then((res)=>{
 getRequest();
 })
